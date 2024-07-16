@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.User;
+import org.example.repository.BaseRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    private UserRepository userRepository;
     @Autowired
-    UserRepository userRepository;
+    public void UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public List<User> getAllUser() {
         System.out.println("Получаем всех клиентов");
@@ -37,14 +41,13 @@ public class UserService {
 
     public User createOrUpdateUser(User user) {
         System.out.println("createOrUpdateUser");
-        if (user == null) {
+        if (user.getId() == 0) {
             user = userRepository.save(user);
             return user;
         } else {
             Optional<User> userOld = userRepository.findById(user.getId());
             if (userOld.isPresent()) {
                 User newUser = userOld.get();
-                newUser.setLogin(user.getLogin());
                 newUser.setEmail(user.getEmail());
                 newUser.setPassword(user.getPassword());
 

@@ -1,25 +1,29 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Base")
 public class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
     @Column(name = "time")
     private LocalDateTime time;
-    @Column(name = "active", nullable = false)
+    @Column(name = "active")
     private Boolean active;
-    @Column(name = "rating", nullable = false)
+    @Column(name = "rating")
     private int rating;
 }

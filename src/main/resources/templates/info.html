@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Page</title>
+</head>
+<body>
+<h1>Ну давай, посмотри, что ты тут наделал </h1>
+
+Название: <a th:text="${task.getName()}"--></a>
+<br>
+Описание: <a th:text="${task.getDescription()}"--></a>
+<br>
+Дата:<a th:text="${task.getTime()}"--></a>
+<br>
+Еще доступно?:<a th:text="${task.getActive()}"--></a>
+<br>
+Важность:<a th:text="${task.getRating()}"--></a>
+
+
+</body>
+</html>

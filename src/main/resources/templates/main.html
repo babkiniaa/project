@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<h1>Welcome </h1>
+<p>Если ты добрался до сюда, считай уже молодец</p>
+<p>Ниже строчка по вашему пожеланию</p>
+
+<form action="/main" method="post">
+    Название цели: <input type="text" name="name"><br/>
+    Описание: <input type="text" step="any" name="description"><br/>
+    <div><input type="radio" value="1" name="rating"/>
+        <input type="radio" value="2" name="rating"/>
+        <input type="radio" value="3" name="rating"/>
+        <input type="radio" value="4" name="rating"/>
+        <input type="radio" value="5" name="rating"/></div>
+    <label for="localdate">Дата и время: </label>
+    <input type="datetime-local" id="localdate" name="date"/><br/>
+    <button type="submit">Добавить план</button>
+</form>
+<form action="/main/all" target="_blank">
+    <button>Все твои работы тут</button>
+</form>
+
+</body>
+</html>
