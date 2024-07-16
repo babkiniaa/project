@@ -43,7 +43,6 @@ public class BaseService {
     public Base createOrUpdateBase(Base base) {
         System.out.println("createOrUpdateUser");
         if (base.getId() == 0) {
-            base.setActive(true);
             base = baseRepository.save(base);
             return base;
         } else {
@@ -65,7 +64,7 @@ public class BaseService {
         }
     }
 
-    public void deleteUserById(int id) {
+    public void deleteBaseById(int id) {
         System.out.println("Удаление базы");
         Optional<Base> base = baseRepository.findById(id);
         if (base.isPresent()) {

@@ -26,28 +26,15 @@ public class UserController {
 
     @GetMapping()
     public String getAllUsers(Model model) {
-        System.out.println("Получаем всех пользователей");
-        List<User> users = userService.getAllUser();
-        model.addAttribute("employees", users);
+        model.addAttribute("base", new Base());
         return "main";
     }
 
+
     @PostMapping("/main")
-    public String addProduct(
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam int rating,
-            @RequestParam("date") String dateTime,
-            Model model
-    ) {
+    public String addProduct(@ModelAttribute("base") Base baseModel,Model model) {
         System.out.println("Могешь когда хочешь");
-        Base base = new Base();
-        base.setName(name);
-        base.setDescription(description);
-        base.setRating(rating);
-//        base.setTime(dateTime);
-        baseService.createOrUpdateBase(base);
-        model.addAttribute("base", base);
+        baseService.createOrUpdateBase(baseModel);
 
         return "main";
     }
@@ -61,10 +48,30 @@ public class UserController {
 
     @GetMapping("/main/all")
     public String getById(Model model) {
-//        List<Base> base = baseService.getAllBase();
         model.addAttribute("all", baseService.getAllBase());
-
         return "all";
+    }
+
+    @PostMapping("/main/edit/{id}")
+    public String editBase(@PathVariable("id")int id,
+                           @ModelAttribute("base") Base baseModel,
+                           Model model) {
+        System.out.println("Меня меняю");
+        baseService.createOrUpdateBase(baseModel);
+        return "edit";
+    }
+
+    @GetMapping("/main/edit/{id}")
+    public String editBase(@ModelAttribute("base") Base baseModel) {
+        System.out.println("Меня меняю1");
+        return "edit";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable int id,
+                         @ModelAttribute("base") Base baseModel){
+        baseService.deleteBaseById(id);
+        return "main";
     }
 
 }

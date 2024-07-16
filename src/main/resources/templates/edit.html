@@ -2,21 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>You Bag Data</title>
+    <title>Home Page</title>
 </head>
 <body>
-<h1>You Bag Data </h1>
-<p>Если ты добрался до сюда, считай уже молодец</p>
-<p>Ниже строчка по вашему пожеланию</p>
+<h1>Меняй меня, если сможешь </h1>
 
-<form th:object="${base}" action="/main" method="post">
+<form th:action="@{/main/edit/{id}(id=${base.getId()})}" th:object="${base}" method="post">
     Название цели: <input type="text" th:field="*{name}"><br/>
     Описание: <input type="text" step="any" th:field="*{description}"><br/>
     Важность: <div><input type="radio" value="1" th:field="*{rating}"/>
-        <input type="radio" value="2" th:field="*{rating}"/>
-        <input type="radio" value="3" th:field="*{rating}"/>
-        <input type="radio" value="4" th:field="*{rating}"/>
-        <input type="radio" value="5" th:field="*{rating}"/></div>
+    <input type="radio" value="2" th:field="*{rating}"/>
+    <input type="radio" value="3" th:field="*{rating}"/>
+    <input type="radio" value="4" th:field="*{rating}"/>
+    <input type="radio" value="5" th:field="*{rating}"/></div>
     <label for="localdate">Дата и время: </label>
     <input type="datetime-local" id="localdate" th:field="*{time}"/><br/>
     <fieldset style="width:10em">
@@ -26,8 +24,14 @@
             <label for="scales">да</label>
         </div>
     </fieldset>
-    <button type="submit">Добавить план</button>
+    <button type="submit">Сохранить твои изменея</button>
 </form>
+
+<form th:action="@{/delete/{id}(id=${base.getId()})}" th:object="${base}" target="_blank">
+    <button>Удали</button>
+</form>
+
+
 <form action="/main/all" target="_blank">
     <button>Все твои работы тут</button>
 </form>

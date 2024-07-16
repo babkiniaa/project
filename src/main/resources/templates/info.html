@@ -16,6 +16,12 @@
 Еще доступно?:<a th:text="${task.getActive()}"--></a>
 <br>
 Важность:<a th:text="${task.getRating()}"--></a>
+<br>
+<!--<a th:text="Редактировать"-->
+<!--   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>-->
+
+<a th:text="Редактировать"
+   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>
 
 
 </body>

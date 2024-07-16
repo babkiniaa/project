@@ -18,6 +18,9 @@
 <body>
 <h1>Вот все твои записи</h1>
 
+<a th:text="Редактировать"
+   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>
+
 <!--<a th:text="${all.getAllBase()}" &ndash;&gt;</a>-->
 <br>
 <div th:each="all : ${all}">
@@ -26,15 +29,6 @@
     <!--    <button type="submit" th:href="@{/ToDO/{id}(id=${plan.getId()})}">Update</button>-->
     <!--    &ndash;&gt;-->
 </div>
-<!--Название: <a th:text="${task.getName()}"&ndash;&gt;</a>-->
-<!--<br>-->
-<!--Описание: <a th:text="${task.getDescription()}"&ndash;&gt;</a>-->
-<!--<br>-->
-<!--Дата:<a th:text="${task.getTime()}"&ndash;&gt;</a>-->
-<!--<br>-->
-<!--Еще доступно?:<a th:text="${task.getActive()}"&ndash;&gt;</a>-->
-<!--<br>-->
-<!--Важность:<a th:text="${task.getRating()}"&ndash;&gt;</a>-->
 
 
 </body>

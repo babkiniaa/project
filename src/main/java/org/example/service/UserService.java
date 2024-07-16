@@ -62,12 +62,12 @@ public class UserService {
     }
 
     public void deleteUserById(int id){
-        System.out.println("Удаление аккаунта");
+        System.out.println("Удаление задания");
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()){
             userRepository.deleteById(id);
         }else{
-            System.out.println("Такого пользователя нет");
+            System.out.println("Такого задания нет");
         }
     }
 
