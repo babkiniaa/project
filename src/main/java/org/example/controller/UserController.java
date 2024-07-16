@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/main/all")
-    public String getById(Model model) {
+    public String getAllBase(Model model) {
         model.addAttribute("all", baseService.getAllBase());
         return "all";
     }
@@ -74,4 +74,15 @@ public class UserController {
         return "main";
     }
 
+    @GetMapping("/main/all/completed")
+    public String getAllBaseComplete(Model model) {
+        model.addAttribute("all", baseService.findByActive(true));
+        return "all";
+    }
+
+    @GetMapping("/main/all/notcompleted")
+    public String getAllBaseNotComplete(Model model) {
+        model.addAttribute("all", baseService.findByActive(false));
+        return "all";
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.Category;
 
 import java.time.LocalDateTime;
 
@@ -26,4 +27,6 @@ public class Base {
     private Boolean active;
     @Column(name = "rating")
     private int rating;
+    @Column(name = "category")
+    private Category category;
 }

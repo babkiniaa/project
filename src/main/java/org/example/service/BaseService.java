@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.Category;
 import org.example.entity.Base;
 import org.example.entity.User;
 import org.example.repository.BaseRepository;
@@ -36,7 +37,7 @@ public class BaseService {
             return base.get();
         } else {
             System.out.println("запись не найдена");
-            return new Base(0, " ", " ", null,true,0);
+            return new Base(0, " ", " ", null,true,0, Category.OTHER);
         }
     }
 
@@ -72,5 +73,9 @@ public class BaseService {
         } else {
             System.out.println("Такой базы нет");
         }
+    }
+
+    public List<Base> findByActive(Boolean active){
+        return baseRepository.findByActive(active);
     }
 }

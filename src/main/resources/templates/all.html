@@ -18,9 +18,12 @@
 <body>
 <h1>Вот все твои записи</h1>
 
-<a th:text="Редактировать"
-   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>
-
+<form action="/main/all/completed" target="_blank">
+    <button>Только выполненные</button>
+</form>
+<form action="/main/all/notcompleted" target="_blank">
+    <button>Только невыполненные</button>
+</form>
 <!--<a th:text="${all.getAllBase()}" &ndash;&gt;</a>-->
 <br>
 <div th:each="all : ${all}">
