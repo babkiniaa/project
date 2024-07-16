@@ -1,28 +1,90 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Home Page</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Ну давай, посмотри, что ты тут наделал </h1>-->
+
+<!--Название: <a th:text="${task.getName()}"&ndash;&gt;</a>-->
+<!--<br>-->
+<!--Описание: <a th:text="${task.getDescription()}"&ndash;&gt;</a>-->
+<!--<br>-->
+<!--Дата:<a th:text="${task.getTime()}"&ndash;&gt;</a>-->
+<!--<br>-->
+<!--Еще доступно?:<a th:text="${task.getActive()}"&ndash;&gt;</a>-->
+<!--<br>-->
+<!--Важность:<a th:text="${task.getRating()}"&ndash;&gt;</a>-->
+<!--<br>-->
+<!--&lt;!&ndash;<a th:text="Редактировать"&ndash;&gt;-->
+<!--&lt;!&ndash;   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>&ndash;&gt;-->
+
+<!--<a th:text="Редактировать"-->
+<!--   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Home Page</title>
+  <style>
+    body {
+      background: url('https://example.com/your-pony-image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #d147a3;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff69b4;
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    a {
+      color: #d147a3;
+      font-size: 1.2em;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #ff69b4;
+      text-decoration: underline;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .task-info {
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #ff69b4;
+      border-radius: 10px;
+      padding: 20px;
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 <body>
-<h1>Ну давай, посмотри, что ты тут наделал </h1>
+<h1>Ну давай, посмотри, что ты тут наделал</h1>
 
-Название: <a th:text="${task.getName()}"--></a>
-<br>
-Описание: <a th:text="${task.getDescription()}"--></a>
-<br>
-Дата:<a th:text="${task.getTime()}"--></a>
-<br>
-Еще доступно?:<a th:text="${task.getActive()}"--></a>
-<br>
-Важность:<a th:text="${task.getRating()}"--></a>
-<br>
-<!--<a th:text="Редактировать"-->
-<!--   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>-->
-
-<a th:text="Редактировать"
-   th:href="@{/main/edit/{id}(id=${task.getId()})}">base</a>
-
+<div class="task-info">
+  Название: <a th:text="${task.getName()}"--></a><br>
+  Описание: <a th:text="${task.getDescription()}"--></a><br>
+  Дата: <a th:text="${task.getTime()}"--></a><br>
+  Еще доступно?: <a th:text="${task.getActive()}"--></a><br>
+  Важность: <a th:text="${task.getRating()}"--></a><br>
+  <a th:text="Редактировать" th:href="@{/main/edit/{id}(id=${task.getId()})}">Редактировать</a>
+</div>
 
 </body>
 </html>
