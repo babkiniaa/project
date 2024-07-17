@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.entity.User;
 import org.example.repository.BaseRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,16 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
     @Autowired
-    public void UserService(UserRepository userRepository){
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAllUser() {
@@ -27,42 +34,25 @@ public class UserService {
         }
     }
 
-    public User getUserById(int id) {
+    public Optional<User> getUserByEmail(String name) {
+        System.out.println(name);
+        System.out.println(userRepository.findByEmail(name));
+        return userRepository.findByEmail(name);
+    }
+
+    public void createOrUpdateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+        userRepository.save(user);
+//        System.out.println(userRepository.findByEmail(user.getEmail()));
+    }
+
+
+    public void deleteUserById(int id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            return user.get();
-        } else {
-            System.out.println("Пользователь не найден");
-            return null;
-        }
-    }
-
-    public User createOrUpdateUser(User user) {
-        if (user.getId() == 0) {
-            user = userRepository.save(user);
-            return user;
-        } else {
-            Optional<User> userOld = userRepository.findById(user.getId());
-            if (userOld.isPresent()) {
-                User newUser = userOld.get();
-                newUser.setEmail(user.getEmail());
-                newUser.setPassword(user.getPassword());
-
-                userRepository.save(newUser);
-
-                return newUser;
-            }else{
-                user = userRepository.save(user);
-                return user;
-            }
-        }
-    }
-
-    public void deleteUserById(int id){
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
             userRepository.deleteById(id);
-        }else{
+        } else {
             System.out.println("Такого задания нет");
         }
     }

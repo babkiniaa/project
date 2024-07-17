@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.Enums.Category;
 import org.example.entity.ArchiveTask;
 import org.example.entity.Base;
+import org.example.entity.User;
 import org.example.service.ArchiveService;
 import org.example.service.BaseService;
 import org.example.service.UserService;
@@ -36,7 +37,11 @@ public class BaseController {
         return "/bases/main";
     }
 
-
+    @GetMapping("/main")
+    public String main(Model model) {
+        model.addAttribute("base", new Base());
+        return "/bases/main";
+    }
     @PostMapping("/main")
     public String addProduct(@ModelAttribute("base") Base baseModel, Model model) {
         baseService.createOrUpdateBase(baseModel);
