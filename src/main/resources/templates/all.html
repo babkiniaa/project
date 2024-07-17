@@ -1,19 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    a.button {
+    padding: 1px 6px;
+    border: 1px outset buttonborder;
+    border-radius: 3px;
+    color: buttontext;
+    background-color: buttonface;
+    text-decoration: none;
+}
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<h1>Вот все твои записи</h1>
+
+
+<form action="/main/all/forName">
+    <label for="date"> Поиск по словам </label>
+    <input name="search" type="text" id="search">
+    <input type="submit" value="Поиск"/>
+</form>
+
+<form action="/main/all/forTime">
+    <label for="date"> По дате поиск </label>
+    <input name="date" type="datetime-local" id="date"/>
+    <input type="submit" value="Поиск"/>
+</form>
+
+<form action="/main/all/completed" target="_blank">
+    <button>Только выполненные</button>
+</form>
+<form action="/main/all/notcompleted" target="_blank">
+    <button>Только невыполненные</button>
+</form>
+<!--<a th:text="${all.getAllBase()}" &ndash;&gt;</a>-->
+<br>
+<div th:each="all : ${all}">
+    <a th:text="${all.getName()}"
+       th:href="@{/main/{id}(id=${all.getId()})}">base</a>
+    <!--    <button type="submit" th:href="@{/ToDO/{id}(id=${plan.getId()})}">Update</button>-->
+    <!--    &ndash;&gt;-->
+</div>
+
+
+</body>
+</html>
+
 <!--<!DOCTYPE html>-->
 <!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<style>-->
-<!--    a.button {-->
-<!--    padding: 1px 6px;-->
-<!--    border: 1px outset buttonborder;-->
-<!--    border-radius: 3px;-->
-<!--    color: buttontext;-->
-<!--    background-color: buttonface;-->
-<!--    text-decoration: none;-->
-<!--}-->
-
-<!--</style>-->
 <!--<head>-->
 <!--    <meta charset="UTF-8">-->
 <!--    <title>Home Page</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            background: url('https://example.com/your-pony-image.jpg') no-repeat center center fixed;-->
+<!--            background-size: cover;-->
+<!--            font-family: 'Comic Sans MS', cursive, sans-serif;-->
+<!--            color: #d147a3;-->
+<!--            text-align: center;-->
+<!--            padding: 20px;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            color: #ff69b4;-->
+<!--            font-size: 3em;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        p {-->
+<!--            font-size: 1.2em;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        form {-->
+<!--            background: #ffffff;-->
+<!--            border: 2px solid #ff69b4;-->
+<!--            border-radius: 10px;-->
+<!--            padding: 20px;-->
+<!--            display: inline-block;-->
+<!--            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        input[type="text"],-->
+<!--        input[type="datetime-local"],-->
+<!--        button {-->
+<!--            display: block;-->
+<!--            margin: 10px auto;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 5px;-->
+<!--            border: 2px solid #ff69b4;-->
+<!--            font-size: 1em;-->
+<!--        }-->
+
+<!--        input[type="radio"],-->
+<!--        input[type="checkbox"] {-->
+<!--            margin: 0 10px;-->
+<!--        }-->
+
+<!--        label {-->
+<!--            color: #d147a3;-->
+<!--        }-->
+
+<!--        fieldset {-->
+<!--            border: 2px solid #ff69b4;-->
+<!--            border-radius: 10px;-->
+<!--            padding: 10px;-->
+<!--            margin: 10px auto;-->
+<!--            width: 50%;-->
+<!--        }-->
+
+<!--        legend {-->
+<!--            color: #ff69b4;-->
+<!--        }-->
+
+<!--        button {-->
+<!--            background-color: #ff69b4;-->
+<!--            color: white;-->
+<!--            cursor: pointer;-->
+<!--            transition: background-color 0.3s ease;-->
+<!--        }-->
+
+<!--        button:hover {-->
+<!--            background-color: #d147a3;-->
+<!--        }-->
+
+<!--        a.button {-->
+<!--            padding: 1px 6px;-->
+<!--            border: 1px outset buttonborder;-->
+<!--            border-radius: 3px;-->
+<!--            color: buttontext;-->
+<!--            background-color: buttonface;-->
+<!--            text-decoration: none;-->
+<!--            display: inline-block;-->
+<!--            margin: 10px auto;-->
+<!--        }-->
+
+<!--        .record-links a {-->
+<!--            display: block;-->
+<!--            margin: 10px 0;-->
+<!--            font-size: 1.2em;-->
+<!--            color: #d147a3;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+
+<!--        .record-links a:hover {-->
+<!--            color: #ff69b4;-->
+<!--            text-decoration: underline;-->
+<!--        }-->
+<!--    </style>-->
 <!--</head>-->
 <!--<body>-->
 <!--<h1>Вот все твои записи</h1>-->
@@ -24,135 +163,10 @@
 <!--<form action="/main/all/notcompleted" target="_blank">-->
 <!--    <button>Только невыполненные</button>-->
 <!--</form>-->
-<!--&lt;!&ndash;<a th:text="${all.getAllBase()}" &ndash;&gt;</a>&ndash;&gt;-->
 <!--<br>-->
-<!--<div th:each="all : ${all}">-->
-<!--    <a th:text="${all.getName()}"-->
-<!--       th:href="@{/main/{id}(id=${all.getId()})}">base</a>-->
-<!--    &lt;!&ndash;    <button type="submit" th:href="@{/ToDO/{id}(id=${plan.getId()})}">Update</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;    &ndash;&gt;&ndash;&gt;-->
+<!--<div class="record-links" th:each="all : ${all}">-->
+<!--    <a th:text="${all.getName()}" th:href="@{/main/{id}(id=${all.getId()})}">base</a>-->
 <!--</div>-->
-
 
 <!--</body>-->
 <!--</html>-->
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-    <style>
-        body {
-            background: url('https://example.com/your-pony-image.jpg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #d147a3;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #ff69b4;
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-
-        form {
-            background: #ffffff;
-            border: 2px solid #ff69b4;
-            border-radius: 10px;
-            padding: 20px;
-            display: inline-block;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        input[type="datetime-local"],
-        button {
-            display: block;
-            margin: 10px auto;
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ff69b4;
-            font-size: 1em;
-        }
-
-        input[type="radio"],
-        input[type="checkbox"] {
-            margin: 0 10px;
-        }
-
-        label {
-            color: #d147a3;
-        }
-
-        fieldset {
-            border: 2px solid #ff69b4;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 10px auto;
-            width: 50%;
-        }
-
-        legend {
-            color: #ff69b4;
-        }
-
-        button {
-            background-color: #ff69b4;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #d147a3;
-        }
-
-        a.button {
-            padding: 1px 6px;
-            border: 1px outset buttonborder;
-            border-radius: 3px;
-            color: buttontext;
-            background-color: buttonface;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px auto;
-        }
-
-        .record-links a {
-            display: block;
-            margin: 10px 0;
-            font-size: 1.2em;
-            color: #d147a3;
-            text-decoration: none;
-        }
-
-        .record-links a:hover {
-            color: #ff69b4;
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-<h1>Вот все твои записи</h1>
-
-<form action="/main/all/completed" target="_blank">
-    <button>Только выполненные</button>
-</form>
-<form action="/main/all/notcompleted" target="_blank">
-    <button>Только невыполненные</button>
-</form>
-<br>
-<div class="record-links" th:each="all : ${all}">
-    <a th:text="${all.getName()}" th:href="@{/main/{id}(id=${all.getId()})}">base</a>
-</div>
-
-</body>
-</html>

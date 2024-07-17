@@ -83,6 +83,7 @@
   Дата: <a th:text="${task.getTime()}"--></a><br>
   Еще доступно?: <a th:text="${task.getActive()}"--></a><br>
   Важность: <a th:text="${task.getRating()}"--></a><br>
+  Категория: <a th:text="${task.getCategory()}"--></a><br>
   <a th:text="Редактировать" th:href="@{/main/edit/{id}(id=${task.getId()})}">Редактировать</a>
 </div>
 

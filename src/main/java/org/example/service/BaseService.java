@@ -7,6 +7,8 @@ import org.example.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +78,14 @@ public class BaseService {
     }
 
     public List<Base> findByActive(Boolean active){
-        return baseRepository.findByActive(active);
+        return baseRepository.findAllByActive(active);
+    }
+
+    public List<Base> findByTime(LocalDateTime time){
+        return baseRepository.findAllByTime(time);
+    }
+
+    public List<Base> findByName(String search){
+        return baseRepository.findByNameOrDescription(search);
     }
 }

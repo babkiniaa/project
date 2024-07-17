@@ -119,6 +119,7 @@
         .button-group button {
             margin: 5px 0;
         }
+
     </style>
 </head>
 <body>
@@ -127,19 +128,28 @@
 <form th:action="@{/main/edit/{id}(id=${base.getId()})}" th:object="${base}" method="post">
     Название цели: <input type="text" th:field="*{name}"><br/>
     Описание: <input type="text" step="any" th:field="*{description}"><br/>
-    Важность: <div>
-    <input type="radio" value="1" th:field="*{rating}"/> 1
-    <input type="radio" value="2" th:field="*{rating}"/> 2
-    <input type="radio" value="3" th:field="*{rating}"/> 3
-    <input type="radio" value="4" th:field="*{rating}"/> 4
-    <input type="radio" value="5" th:field="*{rating}"/> 5
-</div>
+    Важность:
+    <div>
+        <input type="radio" value="1" th:field="*{rating}"/> 1
+        <input type="radio" value="2" th:field="*{rating}"/> 2
+        <input type="radio" value="3" th:field="*{rating}"/> 3
+        <input type="radio" value="4" th:field="*{rating}"/> 4
+        <input type="radio" value="5" th:field="*{rating}"/> 5
+    </div>
     <label for="localdate">Дата и время: </label>
     <input type="datetime-local" id="localdate" th:field="*{time}"/><br/>
+    Категория:
+    <p><select th:field="*{category}">
+        <option value="LIFE">LIFE</option>
+        <option value="WORK">WORK</option>
+        <option value="REST">REST</option>
+        <option value="FAMILY">FAMILY</option>
+        <option value="OTHER">OTHER</option>
+    </select></p>
     <fieldset>
         <legend>Выполнено:</legend>
         <div>
-            <input type="checkbox" id="scales" th:field="*{active}" checked />
+            <input type="checkbox" id="scales" th:field="*{active}" checked/>
             <label for="scales">да</label>
         </div>
     </fieldset>

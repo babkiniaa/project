@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -83,6 +84,19 @@ public class UserController {
     @GetMapping("/main/all/notcompleted")
     public String getAllBaseNotComplete(Model model) {
         model.addAttribute("all", baseService.findByActive(false));
+        return "all";
+    }
+
+    @GetMapping("/main/all/forTime")
+    public String getAllBaseTime(Model model, @RequestParam(required = false) LocalDateTime date) {
+        model.addAttribute("all", baseService.findByTime(date));
+        return "all";
+    }
+
+    @GetMapping("/main/all/forName")
+    public String getAllBaseName(Model model, @RequestParam(required = false) String search) {
+        System.out.println(search);
+        model.addAttribute("all", baseService.findByName(search));
         return "all";
     }
 }
