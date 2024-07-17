@@ -1,14 +1,13 @@
 package org.example.service;
 
-import org.example.Category;
+import org.example.Enums.Category;
+import org.example.Enums.Repitable;
 import org.example.entity.Base;
-import org.example.entity.User;
 import org.example.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,14 +15,14 @@ import java.util.Optional;
 @Service
 public class BaseService {
     private BaseRepository baseRepository;
+
     @Autowired
-    public void BaseService(BaseRepository baseRepository){
+    public void BaseService(BaseRepository baseRepository) {
         this.baseRepository = baseRepository;
     }
 
 
     public List<Base> getAllBase() {
-        System.out.println("Получаем все данные");
         List<Base> bases = (List<Base>) baseRepository.findAll();
         if (bases.size() > 0) {
             return bases;
@@ -33,18 +32,15 @@ public class BaseService {
     }
 
     public Base getBaseById(int id) {
-        System.out.println("Получаем нужную запись");
         Optional<Base> base = baseRepository.findById(id);
         if (base.isPresent()) {
             return base.get();
         } else {
-            System.out.println("запись не найдена");
-            return new Base(0, " ", " ", null,true,0, Category.OTHER);
+            return new Base(0, " ", " ", null, true, 0, Category.OTHER, Repitable.NEVER);
         }
     }
 
     public Base createOrUpdateBase(Base base) {
-        System.out.println("createOrUpdateUser");
         if (base.getId() == 0) {
             base = baseRepository.save(base);
             return base;
@@ -68,7 +64,6 @@ public class BaseService {
     }
 
     public void deleteBaseById(int id) {
-        System.out.println("Удаление базы");
         Optional<Base> base = baseRepository.findById(id);
         if (base.isPresent()) {
             baseRepository.deleteById(id);
@@ -77,15 +72,36 @@ public class BaseService {
         }
     }
 
-    public List<Base> findByActive(Boolean active){
+    public List<Base> findByActive(Boolean active) {
         return baseRepository.findAllByActive(active);
     }
 
-    public List<Base> findByTime(LocalDateTime time){
+    public List<Base> findByTime(LocalDateTime time) {
         return baseRepository.findAllByTime(time);
     }
 
-    public List<Base> findByName(String search){
+    public List<Base> findByCategory(Category category) {
+        return baseRepository.findAllByCategory(category);
+    }
+
+    public List<Base> findByName(String search) {
         return baseRepository.findByNameOrDescription(search);
     }
+
+    public List<Base> sortByRating() {
+        return baseRepository.findAllOrderByRatingAsc();
+    }
+
+    public void nextTime(List<Base> bases) {
+        for (Base bas : bases) {
+            if (bas.getRepeatable() == Repitable.DAY) {
+                bas.setTime(bas.getTime().plusDays(1));
+            } else if (bas.getRepeatable() == Repitable.HOURS) {
+                bas.setTime(bas.getTime().plusHours(1));
+            } else if (bas.getRepeatable() == Repitable.WEEK) {
+                bas.setTime(bas.getTime().plusWeeks(1));
+            }
+        }
+    }
+
 }

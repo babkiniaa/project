@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.Category;
+import org.example.Enums.Category;
+import org.example.Enums.Repitable;
 
 import java.time.LocalDateTime;
 
@@ -29,4 +30,6 @@ public class Base {
     private int rating;
     @Column(name = "category")
     private Category category;
+    @Column(name = "repeatable")
+    private Repitable repeatable;
 }

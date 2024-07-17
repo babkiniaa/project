@@ -14,12 +14,11 @@ public class ArchiveService {
     private ArchiveRepository archiveRepository;
 
     @Autowired
-    public void BaseService(ArchiveRepository archiveRepository) {
+    public void ArchiveService(ArchiveRepository archiveRepository) {
         this.archiveRepository = archiveRepository;
     }
 
-    public List<ArchiveTask> getAllBase() {
-        System.out.println("Получаем все данные");
+    public List<ArchiveTask> getAllArchive() {
         List<ArchiveTask> bases = (List<ArchiveTask>) archiveRepository.findAll();
         if (bases.size() > 0) {
             return bases;
@@ -28,8 +27,7 @@ public class ArchiveService {
         }
     }
 
-    public ArchiveTask getBaseById(int id) {
-        System.out.println("Получаем нужную запись");
+    public ArchiveTask getArchiveById(int id) {
         Optional<ArchiveTask> base = archiveRepository.findById(id);
         if (base.isPresent()) {
             return base.get();
@@ -39,8 +37,7 @@ public class ArchiveService {
         }
     }
 
-    public ArchiveTask createOrUpdateBase(ArchiveTask archiveTask) {
-        System.out.println("createOrUpdateUser");
+    public ArchiveTask createOrUpdateArchive(ArchiveTask archiveTask) {
         if (archiveTask.getId() == 0) {
             archiveTask = archiveRepository.save(archiveTask);
             return archiveTask;
@@ -64,7 +61,6 @@ public class ArchiveService {
     }
 
     public void deleteTaskArchiveById(int id){
-        System.out.println("Удаление задания");
         Optional<ArchiveTask> base = archiveRepository.findById(id);
         if(base.isPresent()){
             archiveRepository.deleteById(id);

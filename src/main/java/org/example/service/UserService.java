@@ -19,7 +19,6 @@ public class UserService {
     }
 
     public List<User> getAllUser() {
-        System.out.println("Получаем всех клиентов");
         List<User> result = (List<User>) userRepository.findAll();
         if (result.size() > 0) {
             return result;
@@ -29,7 +28,6 @@ public class UserService {
     }
 
     public User getUserById(int id) {
-        System.out.println("Получаем нужного клиента");
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
@@ -40,7 +38,6 @@ public class UserService {
     }
 
     public User createOrUpdateUser(User user) {
-        System.out.println("createOrUpdateUser");
         if (user.getId() == 0) {
             user = userRepository.save(user);
             return user;
@@ -62,7 +59,6 @@ public class UserService {
     }
 
     public void deleteUserById(int id){
-        System.out.println("Удаление задания");
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()){
             userRepository.deleteById(id);

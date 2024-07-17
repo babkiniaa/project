@@ -10,6 +10,8 @@
     text-decoration: none;
 }
 
+
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -37,13 +39,32 @@
 <form action="/main/all/notcompleted" target="_blank">
     <button>Только невыполненные</button>
 </form>
-<!--<a th:text="${all.getAllBase()}" &ndash;&gt;</a>-->
+<form action="/main/all/all" target="_blank">
+    <button>Показать все задачи</button>
+</form>
+<form action="/main/all/allSort" target="_blank">
+    <button>Показать задачи по важности</button>
+</form>
+
+<form action="/main/all/forCategory">
+<p><select name="category" id="category">
+    <option value="LIFE">LIFE</option>
+    <option value="WORK">WORK</option>
+    <option value="REST">REST</option>
+    <option value="FAMILY">FAMILY</option>
+    <option value="OTHER">OTHER</option>
+    <input type="submit" value="Поиск"/>
+</select></p>
+</form>
 <br>
 <div th:each="all : ${all}">
     <a th:text="${all.getName()}"
        th:href="@{/main/{id}(id=${all.getId()})}">base</a>
-    <!--    <button type="submit" th:href="@{/ToDO/{id}(id=${plan.getId()})}">Update</button>-->
-    <!--    &ndash;&gt;-->
+    <a th:href="@{/archive/{id}(id=${all.getId()})}">Заарихивируй меня, дорогой</a>
+</div>
+<div th:each="archive : ${archive}">
+    <a th:text="${archive.getName()}"
+       th:href="@{/main/archive/{id}(id=${archive.getId()})}">base</a>
 </div>
 
 
