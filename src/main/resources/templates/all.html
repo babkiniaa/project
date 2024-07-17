@@ -60,7 +60,7 @@
 <div th:each="all : ${all}">
     <a th:text="${all.getName()}"
        th:href="@{/main/{id}(id=${all.getId()})}">base</a>
-    <a th:href="@{/archive/{id}(id=${all.getId()})}">Заарихивируй меня, дорогой</a>
+    <a th:href="@{/archive/{id}(id=${all.getId()})}">Заарихивируй меня</a>
 </div>
 <div th:each="archive : ${archive}">
     <a th:text="${archive.getName()}"

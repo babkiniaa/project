@@ -34,31 +34,31 @@ public class BaseController {
     @GetMapping()
     public String getAllUsers(Model model) {
         model.addAttribute("base", new Base());
-        return "/bases/main";
+        return "main";
     }
 
     @GetMapping("/main")
     public String main(Model model) {
         model.addAttribute("base", new Base());
-        return "/bases/main";
+        return "main";
     }
     @PostMapping("/main")
     public String addProduct(@ModelAttribute("base") Base baseModel, Model model) {
         baseService.createOrUpdateBase(baseModel);
-        return "/bases/main";
+        return "main";
     }
 
     @GetMapping("/main/{id}")
     public String getById(@PathVariable int id, Model model) {
         Base base = baseService.getBaseById(id);
         model.addAttribute("task", base);
-        return "/bases/info";
+        return "info";
     }
 
     @GetMapping("/main/all")
     public String getAllBase(Model model) {
         model.addAttribute("all", baseService.getAllBase());
-        return "/bases/all";
+        return "all";
     }
 
     @PostMapping("/main/edit/{id}")
@@ -66,7 +66,7 @@ public class BaseController {
                            @ModelAttribute("base") Base baseModel,
                            Model model) {
         baseService.createOrUpdateBase(baseModel);
-        return "/bases/edit";
+        return "edit";
     }
 
     @GetMapping("/main/edit/{id}")
@@ -78,38 +78,38 @@ public class BaseController {
     public String delete(@PathVariable int id,
                          @ModelAttribute("base") Base baseModel) {
         baseService.deleteBaseById(id);
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("/main/all/completed")
     public String getAllBaseComplete(Model model) {
         model.addAttribute("all", baseService.findByActive(true));
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("/main/all/notcompleted")
     public String getAllBaseNotComplete(Model model) {
         model.addAttribute("all", baseService.findByActive(false));
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("/main/all/forTime")
     public String getAllBaseTime(Model model, @RequestParam(required = false) LocalDateTime date) {
         model.addAttribute("all", baseService.findByTime(date));
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("/main/all/forCategory")
     public String getAllForCategory(Model model, @RequestParam(required = false)Category category) {
         model.addAttribute("all", baseService.findByCategory(category));
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("/main/all/forName")
     public String getAllBaseName(Model model, @RequestParam(required = false) String search) {
         System.out.println(search);
         model.addAttribute("all", baseService.findByName(search));
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("archive/{id}")
@@ -118,7 +118,7 @@ public class BaseController {
         ArchiveTask archiveTask = new ArchiveTask(base.getId(), base.getName(), base.getDescription(), base.getTime(), base.getActive(), base.getRating(), base.getCategory(), base.getRepeatable());
         baseService.deleteBaseById(id);
         archiveService.createOrUpdateArchive(archiveTask);
-        return "redirect:/bases/main/all";
+        return "all";
     }
 
     @GetMapping("main/all/all")
@@ -127,20 +127,20 @@ public class BaseController {
         List<ArchiveTask> archiveTasks = archiveService.getAllArchive();
         model.addAttribute("all", bases);
         model.addAttribute("archive", archiveTasks);
-        return "/bases/all";
+        return "all";
     }
 
     @GetMapping("main/all/allSort")
     public String AllSort(Model model) {
         List<Base> bases = baseService.sortByRating();
         model.addAttribute("all", bases);
-        return "/bases/all";
+        return "all";
     }
     @GetMapping("/main/archive/{id}")
     public String getByIdArchive(@PathVariable int id, Model model) {
         ArchiveTask archiveTask = archiveService.getArchiveById(id);
         model.addAttribute("task", archiveTask);
-        return "/bases/info";
+        return "info";
     }
 
     @Scheduled(initialDelay = 2000, fixedRate = 3000)

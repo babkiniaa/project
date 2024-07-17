@@ -20,17 +20,17 @@ public class AuthController {
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
-        return "user/register";
+        return "register";
     }
 
     @PostMapping("/register")
     public String register(@ModelAttribute("user") User user) {
         userService.createOrUpdateUser(user);
-        return "redirect:user/login";
+        return "redirect:login";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "user/login";
+        return "login";
     }
 }
