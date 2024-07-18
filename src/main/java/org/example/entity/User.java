@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +22,8 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
     @Column(nullable = false)
-    private String role = "ROLE_USER";
+    private String role = "ROLE_USERS";
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Base> bases;
 
 }

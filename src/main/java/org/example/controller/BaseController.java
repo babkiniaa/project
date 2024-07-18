@@ -10,12 +10,15 @@ import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -32,7 +35,7 @@ public class BaseController {
     }
 
     @GetMapping()
-    public String getAllUsers(Model model) {
+    public String getAll(Model model) {
         model.addAttribute("base", new Base());
         return "main";
     }
@@ -43,7 +46,9 @@ public class BaseController {
         return "main";
     }
     @PostMapping("/main")
-    public String addProduct(@ModelAttribute("base") Base baseModel, Model model) {
+    public String addProduct(@ModelAttribute("base") Base baseModel, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        Optional<User> user = userService.getUserByEmail(userDetails.getUsername());
+//        baseModel.setUser(user.get());
         baseService.createOrUpdateBase(baseModel);
         return "main";
     }

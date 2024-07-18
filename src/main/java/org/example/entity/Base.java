@@ -8,6 +8,7 @@ import org.example.Enums.Category;
 import org.example.Enums.Repitable;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -32,4 +33,7 @@ public class Base {
     private Category category;
     @Column(name = "repeatable")
     private Repitable repeatable;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

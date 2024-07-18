@@ -6,6 +6,7 @@ import org.example.entity.Base;
 import org.example.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,10 +37,10 @@ public class BaseService {
         if (base.isPresent()) {
             return base.get();
         } else {
-            return new Base(0, " ", " ", null, true, 0, Category.OTHER, Repitable.NEVER);
+            return new Base(0, " ", " ", null, true, 0, Category.OTHER, Repitable.NEVER, null);
         }
     }
-
+    @Transactional
     public Base createOrUpdateBase(Base base) {
         if (base.getId() == 0) {
             base = baseRepository.save(base);
@@ -62,7 +63,7 @@ public class BaseService {
             }
         }
     }
-
+    @Transactional
     public void deleteBaseById(int id) {
         Optional<Base> base = baseRepository.findById(id);
         if (base.isPresent()) {
@@ -72,7 +73,7 @@ public class BaseService {
         }
     }
 
-    public List<Base> findByActive(Boolean active) {
+    public Optional<List<Base>> findByActive(Boolean active) {
         return baseRepository.findAllByActive(active);
     }
 
@@ -91,7 +92,7 @@ public class BaseService {
     public List<Base> sortByRating() {
         return baseRepository.findAllOrderByRatingAsc();
     }
-
+    @Transactional
     public void nextTime(List<Base> bases) {
         for (Base bas : bases) {
             if (bas.getRepeatable() == Repitable.DAY) {

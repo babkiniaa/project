@@ -31,4 +31,7 @@ public class ArchiveTask {
     private Category category;
     @Column(name = "repeatable")
     private Repitable repeatable;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private User user;
 }

@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,12 @@ public class UserService {
         }
     }
 
-    public Optional<User> getUserByEmail(String name) {
+    public Optional<User>getUserByEmail(String name) {
         System.out.println(name);
         System.out.println(userRepository.findByEmail(name));
         return userRepository.findByEmail(name);
     }
-
+    @Transactional
     public void createOrUpdateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
@@ -47,7 +48,7 @@ public class UserService {
 //        System.out.println(userRepository.findByEmail(user.getEmail()));
     }
 
-
+    @Transactional
     public void deleteUserById(int id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {

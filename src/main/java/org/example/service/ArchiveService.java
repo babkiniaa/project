@@ -4,6 +4,7 @@ import org.example.entity.ArchiveTask;
 import org.example.repository.ArchiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class ArchiveService {
     public void ArchiveService(ArchiveRepository archiveRepository) {
         this.archiveRepository = archiveRepository;
     }
-
+    @Transactional(readOnly = true)
     public List<ArchiveTask> getAllArchive() {
         List<ArchiveTask> bases = (List<ArchiveTask>) archiveRepository.findAll();
         if (bases.size() > 0) {
@@ -26,7 +27,7 @@ public class ArchiveService {
             return new ArrayList<ArchiveTask>();
         }
     }
-
+    @Transactional(readOnly = true)
     public ArchiveTask getArchiveById(int id) {
         Optional<ArchiveTask> base = archiveRepository.findById(id);
         if (base.isPresent()) {
@@ -36,7 +37,7 @@ public class ArchiveService {
             return new ArchiveTask();
         }
     }
-
+    @Transactional
     public ArchiveTask createOrUpdateArchive(ArchiveTask archiveTask) {
         if (archiveTask.getId() == 0) {
             archiveTask = archiveRepository.save(archiveTask);
@@ -59,7 +60,7 @@ public class ArchiveService {
             }
         }
     }
-
+    @Transactional
     public void deleteTaskArchiveById(int id){
         Optional<ArchiveTask> base = archiveRepository.findById(id);
         if(base.isPresent()){

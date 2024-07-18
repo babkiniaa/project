@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface BaseRepository extends JpaRepository<Base, Integer> {
-    List<Base> findAllByActive(Boolean active);
+    Optional<List<Base>> findAllByActive(Boolean active);
     List<Base> findAllByTime(LocalDateTime time);
     List<Base> findAllByCategory(Category category);
     @Query(value = "select u from Base u where u.name = %?1% or u.description = %?1%")
