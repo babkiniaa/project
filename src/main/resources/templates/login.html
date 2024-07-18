@@ -1,29 +1,115 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <title>Login</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Вход</h1>-->
+<!--<form th:action="@{/login}" method="post">-->
+<!--  <div>-->
+<!--    <label>Username:</label>-->
+<!--    <input type="text" id="username" name="username" />-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Password:</label>-->
+<!--    <input type="password" id="password" name="password" />-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <button type="submit">Войти</button>-->
+<!--  </div>-->
+<!--</form>-->
+<!--<div>-->
+<!--  <form action="/register" target="_blank">-->
+<!--    <button>Регистрация</button>-->
+<!--    <p th:if="${param.error}" class="form-error">Неправильный логин или пароль</p>-->
+<!--  </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Login</title>
+  <style>
+        body {
+            background-color: #1A1A1A;
+            font-family: 'Arial', sans-serif;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 48px;
+            color: #FF69B4;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #2C2C2C;
+            border: 2px solid #FF69B4;
+            border-radius: 10px;
+            padding: 30px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+        label, input {
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: block;
+            width: 100%;
+            color: #FFFFFF;
+        }
+        input[type="text"], input[type="password"] {
+            background-color: #3C3C3C;
+            border: 1px solid #FF69B4;
+            border-radius: 5px;
+            padding: 10px;
+            color: #FFFFFF;
+        }
+        input[type="submit"], button {
+            font-family: 'Arial', sans-serif;
+            font-size: 20px;
+            color: #FFFFFF;
+            background-color: #FF69B4;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #FF1493;
+        }
+        .register {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <h1>Вход</h1>
 <form th:action="@{/login}" method="post">
   <div>
-    <label>Username:</label>
-    <input type="text" id="username" name="username" />
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required />
   </div>
   <div>
-    <label>Password:</label>
-    <input type="password" id="password" name="password" />
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required />
   </div>
   <div>
-    <button type="submit">Войти</button>
+    <input type="submit" value="Войти" />
   </div>
+  <p th:if="${param.error}" class="form-error">Неправильный логин или пароль</p>
 </form>
-<div>
-  <form action="/register" target="_blank">
+<div class="register">
+  <form th:action="@{/register}" method="get">
     <button>Регистрация</button>
-    <p th:if="${param.error}" class="form-error">Неправильный логин или пароль</p>
   </form>
 </div>
 </body>
 </html>
-

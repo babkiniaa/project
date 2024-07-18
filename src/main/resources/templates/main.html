@@ -1,196 +1,193 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>You Bag Data</title>
-</head>
-<body>
-<h1>You Bag Data </h1>
-<p>Если ты добрался до сюда, считай уже молодец</p>
-<p>Ниже строчка по вашему пожеланию</p>
-
-<form th:object="${base}" action="/main" method="post">
-    Название цели: <input type="text" th:field="*{name}"><br/><div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-    Описание: <input type="text" step="any" th:field="*{description}"><br/>
-    Важность:
-    <div><input type="radio" value="1" th:field="*{rating}"/>
-        <input type="radio" value="2" th:field="*{rating}"/>
-        <input type="radio" value="3" th:field="*{rating}"/>
-        <input type="radio" value="4" th:field="*{rating}"/>
-        <input type="radio" value="5" th:field="*{rating}"/></div>
-    <label for="localdate">Дата и время: </label>
-    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/><div class="form-error" th:if="${#fields.hasErrors('time')}" th:text="${#fields.errors('time').get(#fields.errors('time').size() - 1)}"></div>
-
-    Категория:
-    <p><select th:field="*{category}">
-        <option value="LIFE">LIFE</option>
-        <option value="WORK">WORK</option>
-        <option value="REST">REST</option>
-        <option value="FAMILY">FAMILY</option>
-        <option value="OTHER">OTHER</option>
-    </select></p>
-
-    Повторяющаяся:
-    <p><select th:field="*{repeatable}">
-        <option value="NEVER">NEVER</option>
-        <option value="HOURS">HOURS</option>
-        <option value="DAY">DAY</option>
-        <option value="WEEK">WEEK</option>
-    </select></p>
-
-    <fieldset style="width:10em">
-        <legend>Выполнено:</legend>
-        <div>
-            <input type="checkbox" id="scales" th:field="*{active}" checked/>
-            <label for="scales">да</label>
-        </div>
-    </fieldset>
-    <button type="submit">Добавить план</button>
-</form>
-<form action="/main/all" target="_blank">
-    <button>Все твои работы тут</button>
-</form>
-
-</body>
-</html>
-
 <!--<!DOCTYPE html>-->
 <!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
 <!--<head>-->
 <!--    <meta charset="UTF-8">-->
 <!--    <title>You Bag Data</title>-->
-<!--    <style>-->
-<!--        body {-->
-<!--            background: linear-gradient(to bottom, #ffebff, #ffe6ff);-->
-<!--            font-family: 'Comic Sans MS', cursive, sans-serif;-->
-<!--            color: #d147a3;-->
-<!--            text-align: center;-->
-<!--            padding: 20px;-->
-<!--        }-->
-
-<!--        h1 {-->
-<!--            color: #ff69b4;-->
-<!--            font-size: 3em;-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        p {-->
-<!--            font-size: 1.2em;-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        form {-->
-<!--            background: #ffffff;-->
-<!--            border: 2px solid #ff69b4;-->
-<!--            border-radius: 10px;-->
-<!--            padding: 20px;-->
-<!--            display: inline-block;-->
-<!--            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        input[type="text"],-->
-<!--        input[type="datetime-local"],-->
-<!--        button {-->
-<!--            display: block;-->
-<!--            margin: 10px auto;-->
-<!--            padding: 10px;-->
-<!--            border-radius: 5px;-->
-<!--            border: 2px solid #ff69b4;-->
-<!--            font-size: 1em;-->
-<!--        }-->
-
-<!--        input[type="radio"],-->
-<!--        input[type="checkbox"] {-->
-<!--            margin: 0 10px;-->
-<!--        }-->
-
-<!--        label {-->
-<!--            color: #d147a3;-->
-<!--        }-->
-
-<!--        fieldset {-->
-<!--            border: 2px solid #ff69b4;-->
-<!--            border-radius: 10px;-->
-<!--            padding: 10px;-->
-<!--            margin: 10px auto;-->
-<!--            width: 50%;-->
-<!--        }-->
-
-<!--        legend {-->
-<!--            color: #ff69b4;-->
-<!--        }-->
-
-<!--        button {-->
-<!--            background-color: #ff69b4;-->
-<!--            color: white;-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.3s ease;-->
-<!--        }-->
-
-<!--        button:hover {-->
-<!--            background-color: #d147a3;-->
-<!--        }-->
-
-<!--        .button-group {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--        }-->
-
-<!--        .button-group button {-->
-<!--            margin: 5px 0;-->
-<!--        }-->
-
-<!--        .separate-button {-->
-<!--            background-color: #ff69b4;-->
-<!--            color: white;-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.3s ease;-->
-<!--            border: 2px solid #ff69b4;-->
-<!--            border-radius: 5px;-->
-<!--            padding: 10px;-->
-<!--            font-size: 1em;-->
-<!--            display: block;-->
-<!--            margin: 10px auto;-->
-<!--        }-->
-
-<!--        .separate-button:hover {-->
-<!--            background-color: #d147a3;-->
-<!--        }-->
-<!--    </style>-->
 <!--</head>-->
 <!--<body>-->
-<!--<h1>You Bag Data</h1>-->
+<!--<h1>You Bag Data </h1>-->
 <!--<p>Если ты добрался до сюда, считай уже молодец</p>-->
 <!--<p>Ниже строчка по вашему пожеланию</p>-->
 
 <!--<form th:object="${base}" action="/main" method="post">-->
-<!--    Название цели: <input type="text" th:field="*{name}"><br/>-->
+<!--    Название цели: <input type="text" th:field="*{name}"><br/><div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>-->
 <!--    Описание: <input type="text" step="any" th:field="*{description}"><br/>-->
-<!--    Важность: <div>-->
-<!--    <input type="radio" value="1" th:field="*{rating}"/> 1-->
-<!--    <input type="radio" value="2" th:field="*{rating}"/> 2-->
-<!--    <input type="radio" value="3" th:field="*{rating}"/> 3-->
-<!--    <input type="radio" value="4" th:field="*{rating}"/> 4-->
-<!--    <input type="radio" value="5" th:field="*{rating}"/> 5-->
-<!--</div>-->
+<!--    Важность:-->
+<!--    <div><input type="radio" value="1" th:field="*{rating}"/>-->
+<!--        <input type="radio" value="2" th:field="*{rating}"/>-->
+<!--        <input type="radio" value="3" th:field="*{rating}"/>-->
+<!--        <input type="radio" value="4" th:field="*{rating}"/>-->
+<!--        <input type="radio" value="5" th:field="*{rating}"/></div>-->
 <!--    <label for="localdate">Дата и время: </label>-->
-<!--    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/>-->
-<!--    <fieldset>-->
+<!--    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/><div class="form-error" th:if="${#fields.hasErrors('time')}" th:text="${#fields.errors('time').get(#fields.errors('time').size() - 1)}"></div>-->
+
+<!--    Категория:-->
+<!--    <p><select th:field="*{category}">-->
+<!--        <option value="LIFE">LIFE</option>-->
+<!--        <option value="WORK">WORK</option>-->
+<!--        <option value="REST">REST</option>-->
+<!--        <option value="FAMILY">FAMILY</option>-->
+<!--        <option value="OTHER">OTHER</option>-->
+<!--    </select></p>-->
+
+<!--    Повторяющаяся:-->
+<!--    <p><select th:field="*{repeatable}">-->
+<!--        <option value="NEVER">NEVER</option>-->
+<!--        <option value="HOURS">HOURS</option>-->
+<!--        <option value="DAY">DAY</option>-->
+<!--        <option value="WEEK">WEEK</option>-->
+<!--    </select></p>-->
+
+<!--    <fieldset style="width:10em">-->
 <!--        <legend>Выполнено:</legend>-->
 <!--        <div>-->
-<!--            <input type="checkbox" id="scales" th:field="*{active}" checked />-->
+<!--            <input type="checkbox" id="scales" th:field="*{active}" checked/>-->
 <!--            <label for="scales">да</label>-->
 <!--        </div>-->
 <!--    </fieldset>-->
-<!--    <div class="button-group">-->
-<!--        <button type="submit">Добавить план</button>-->
-<!--    </div>-->
+<!--    <button type="submit">Добавить план</button>-->
+<!--</form>-->
+<!--<form action="/main/all" target="_blank">-->
+<!--    <button>Все твои работы тут</button>-->
 <!--</form>-->
 
-<!--<a style="width:10em" href="/main/all" target="_blank" class="separate-button">Все твои работы тут</a>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>You Bag Data</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            font-family: 'Arial', sans-serif;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 48px;
+            color: #FF69B4;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #2C2C2C;
+            border: 2px solid #FF69B4;
+            border-radius: 10px;
+            padding: 30px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            margin-bottom: 20px;
+        }
+        label, input, select {
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: block;
+            width: 100%;
+            color: #FFFFFF;
+        }
+        input[type="text"], input[type="datetime-local"], input[type="radio"], input[type="checkbox"], select {
+            background-color: #3C3C3C;
+            border: 1px solid #FF69B4;
+            border-radius: 5px;
+            padding: 10px;
+            color: #FFFFFF;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            display: inline-block;
+            width: auto;
+        }
+        .form-error {
+            color: #FFCCCC;
+            font-size: 14px;
+        }
+        button {
+            font-family: 'Arial', sans-serif;
+            font-size: 20px;
+            color: #FFFFFF;
+            background-color: #FF69B4;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #FF1493;
+        }
+        fieldset {
+            border: 1px solid #FF69B4;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        legend {
+            color: #FF69B4;
+        }
+    </style>
+</head>
+<body>
+<h1>You Bag Data</h1>
+<p>Если ты добрался до сюда, считай уже молодец</p>
+<p>Ниже строчка по вашему пожеланию</p>
 
+<form th:object="${base}" action="/main" method="post">
+    <label for="name">Название цели:</label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+
+    <label for="description">Описание:</label>
+    <input type="text" id="description" th:field="*{description}"/>
+
+    <label>Важность:</label>
+    <div>
+        <input type="radio" value="1" th:field="*{rating}"/> 1
+        <input type="radio" value="2" th:field="*{rating}"/> 2
+        <input type="radio" value="3" th:field="*{rating}"/> 3
+        <input type="radio" value="4" th:field="*{rating}"/> 4
+        <input type="radio" value="5" th:field="*{rating}"/> 5
+    </div>
+
+    <label for="localdate">Дата и время:</label>
+    <input type="datetime-local" id="localdate" th:field="*{time}"/>
+    <div class="form-error" th:if="${#fields.hasErrors('time')}" th:text="${#fields.errors('time').get(#fields.errors('time').size() - 1)}"></div>
+
+    <label for="category">Категория:</label>
+    <select id="category" th:field="*{category}">
+        <option value="LIFE">LIFE</option>
+        <option value="WORK">WORK</option>
+        <option value="REST">REST</option>
+        <option value="FAMILY">FAMILY</option>
+        <option value="OTHER">OTHER</option>
+    </select>
+
+    <label for="repeatable">Повторяющаяся:</label>
+    <select id="repeatable" th:field="*{repeatable}">
+        <option value="NEVER">NEVER</option>
+        <option value="HOURS">HOURS</option>
+        <option value="DAY">DAY</option>
+        <option value="WEEK">WEEK</option>
+    </select>
+
+    <fieldset>
+        <legend>Выполнено:</legend>
+        <div>
+            <input type="checkbox" id="active" th:field="*{active}" checked/>
+            <label for="active">да</label>
+        </div>
+    </fieldset>
+
+    <button type="submit">Добавить план</button>
+</form>
+
+<form action="/main/all" target="_blank">
+    <button>Все твои работы тут</button>
+</form>
 </body>
 </html>
-

@@ -26,7 +26,70 @@
 
 <!--</body>-->
 <!--</html>-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Home Page</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      background: url('https://ustaliy.ru/wp-content/uploads/2023/11/kto-ty-iz-my-little-pony-jpeg.webp') no-repeat center center fixed;-->
+<!--      background-size: cover;-->
+<!--      font-family: 'Comic Sans MS', cursive, sans-serif;-->
+<!--      color: #d147a3;-->
+<!--      text-align: center;-->
+<!--      padding: 20px;-->
+<!--    }-->
 
+<!--    h1 {-->
+<!--      color: #ff69b4;-->
+<!--      font-size: 3em;-->
+<!--      margin-bottom: 20px;-->
+<!--    }-->
+
+<!--    a {-->
+<!--      color: #d147a3;-->
+<!--      font-size: 1.2em;-->
+<!--      text-decoration: none;-->
+<!--    }-->
+
+<!--    a:hover {-->
+<!--      color: #ff69b4;-->
+<!--      text-decoration: underline;-->
+<!--    }-->
+
+<!--    p {-->
+<!--      font-size: 1.2em;-->
+<!--      margin-bottom: 20px;-->
+<!--    }-->
+
+<!--    .task-info {-->
+<!--      background: rgba(255, 255, 255, 0.8);-->
+<!--      border: 2px solid #ff69b4;-->
+<!--      border-radius: 10px;-->
+<!--      padding: 20px;-->
+<!--      display: inline-block;-->
+<!--      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);-->
+<!--      text-align: left;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Ну давай, посмотри, что ты тут наделал</h1>-->
+
+<!--<div class="task-info">-->
+<!--  <p>Название: <span th:text="${task.name}"></span></p>-->
+<!--  <p>Описание: <span th:text="${task.description}"></span></p>-->
+<!--  <p>Дата: <span th:text="${task.time}"></span></p>-->
+<!--  <p>Еще доступно?: <span th:text="${task.active}"></span></p>-->
+<!--  <p>Важность: <span th:text="${task.rating}"></span></p>-->
+<!--  <p>Категория: <span th:text="${task.category}"></span></p>-->
+<!--  <p>Повторяющаяся: <span th:text="${task.repeatable}"></span></p>-->
+<!--  <p><a th:href="@{/main/edit/{id}(id=${task.id})}">Редактировать</a></p>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -34,43 +97,51 @@
   <title>Home Page</title>
   <style>
     body {
-      background: url('https://example.com/your-pony-image.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      color: #d147a3;
-      text-align: center;
-      padding: 20px;
+      background-color: #1d1f21;
+      color: #FF69B4;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     h1 {
-      color: #ff69b4;
-      font-size: 3em;
-      margin-bottom: 20px;
-    }
-
-    a {
-      color: #d147a3;
-      font-size: 1.2em;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #ff69b4;
-      text-decoration: underline;
-    }
-
-    p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
+      color: #ffcc00;
+      text-align: center;
+      padding: 20px 0;
+      margin: 0;
     }
 
     .task-info {
-      background: rgba(255, 255, 255, 0.8);
-      border: 2px solid #ff69b4;
+      background-color: #2a2c2e;
       border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      margin: 20px auto;
       padding: 20px;
-      display: inline-block;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+    }
+
+    .task-info p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .task-info span {
+      color: #FF69B4;
+    }
+
+    .task-info a {
+      color: #FF69B4;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 15px;
+      border: 2px solid #ffcc00;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .task-info a:hover {
+      background-color: #ffcc00;
+      color: #1d1f21;
     }
   </style>
 </head>
@@ -78,14 +149,14 @@
 <h1>Ну давай, посмотри, что ты тут наделал</h1>
 
 <div class="task-info">
-  Название: <a th:text="${task.getName()}"--></a><br>
-  Описание: <a th:text="${task.getDescription()}"--></a><br>
-  Дата: <a th:text="${task.getTime()}"--></a><br>
-  Еще доступно?: <a th:text="${task.getActive()}"--></a><br>
-  Важность: <a th:text="${task.getRating()}"--></a><br>
-  Категория: <a th:text="${task.getCategory()}"--></a><br>
-  Повторяющаяся: <a th:text="${task.getRepeatable()}"--></a><br>
-  <a th:text="Редактировать" th:href="@{/main/edit/{id}(id=${task.getId()})}">Редактировать</a>
+  <p>Название: <span th:text="${task.name}"></span></p>
+  <p>Описание: <span th:text="${task.description}"></span></p>
+  <p>Дата: <span th:text="${task.time}"></span></p>
+  <p>Еще доступно?: <span th:text="${task.active}"></span></p>
+  <p>Важность: <span th:text="${task.rating}"></span></p>
+  <p>Категория: <span th:text="${task.category}"></span></p>
+  <p>Повторяющаяся: <span th:text="${task.repeatable}"></span></p>
+  <p><a th:href="@{/main/edit/{id}(id=${task.id})}">Редактировать</a></p>
 </div>
 
 </body>
