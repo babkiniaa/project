@@ -67,7 +67,7 @@ public class BaseService {
     }
 
     public List<Base> findByTime(LocalDateTime time, User user) {
-        return baseRepository.findAllByTimeAndUser(time,user);
+        return baseRepository.findByTimeBeforeAndUser(time,user);
     }
 
     public List<Base> findByCategory(Category category, User user) {

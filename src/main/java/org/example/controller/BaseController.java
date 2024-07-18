@@ -116,10 +116,7 @@ public class BaseController {
     }
 
     @GetMapping("/main/all/forTime")
-    public String getAllBaseTime(Model model, @Valid @RequestParam(required = false) LocalDateTime date, BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails) {
-        if (bindingResult.hasErrors()) {
-            return "main";
-        }
+    public String getAllBaseTime(Model model, @RequestParam(required = false) LocalDateTime date, @AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
         model.addAttribute("all", baseService.findByTime(date, user));
         return "all";

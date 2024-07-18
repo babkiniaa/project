@@ -17,7 +17,7 @@ public interface BaseRepository extends JpaRepository<Base, Integer> {
     List<Base> findAllByActiveAndUser(Boolean active, User user);
     List<Base> findAllByUser(User user);
     List<Base> findByUserAndName(User user, String email);
-    List<Base> findAllByTimeAndUser(LocalDateTime time, User user);
+    List<Base> findByTimeBeforeAndUser(LocalDateTime time, User user);
     List<Base> findAllByCategoryAndUser(Category category, User user);
     @Query(value = "select u from Base u where (u.name = %?1% or u.description = %?1%) and u.user = ?2")
     List<Base> findByNameOrDescriptionAndUser(String search, User user);
