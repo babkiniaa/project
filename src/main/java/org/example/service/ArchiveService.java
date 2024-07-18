@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.ArchiveTask;
+import org.example.entity.User;
 import org.example.repository.ArchiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,55 +19,43 @@ public class ArchiveService {
     public void ArchiveService(ArchiveRepository archiveRepository) {
         this.archiveRepository = archiveRepository;
     }
+
     @Transactional(readOnly = true)
-    public List<ArchiveTask> getAllArchive() {
-        List<ArchiveTask> bases = (List<ArchiveTask>) archiveRepository.findAll();
+    public List<ArchiveTask> getAllArchive(User user) {
+        List<ArchiveTask> bases = (List<ArchiveTask>) archiveRepository.findAllByUser(user);
         if (bases.size() > 0) {
             return bases;
         } else {
             return new ArrayList<ArchiveTask>();
         }
     }
+
     @Transactional(readOnly = true)
-    public ArchiveTask getArchiveById(int id) {
-        Optional<ArchiveTask> base = archiveRepository.findById(id);
-        if (base.isPresent()) {
-            return base.get();
-        } else {
-            System.out.println("запись не найдена");
-            return new ArchiveTask();
-        }
+    public ArchiveTask getArchiveById(int id, User user) {
+        return archiveRepository.findByIdAndUser(id, user);
     }
+
     @Transactional
-    public ArchiveTask createOrUpdateArchive(ArchiveTask archiveTask) {
+    public ArchiveTask createOrUpdateArchive(ArchiveTask archiveTask, User user) {
         if (archiveTask.getId() == 0) {
             archiveTask = archiveRepository.save(archiveTask);
             return archiveTask;
         } else {
-            Optional<ArchiveTask> baseOld = archiveRepository.findById(archiveTask.getId());
-            if (baseOld.isPresent()) {
-                ArchiveTask newBase = baseOld.get();
-                newBase.setName(archiveTask.getName());
-                newBase.setTime(archiveTask.getTime());
-                newBase.setActive(archiveTask.getActive());
-                newBase.setRating(archiveTask.getRating());
-
-                archiveRepository.save(newBase);
-
-                return newBase;
-            } else {
-                archiveTask = archiveRepository.save(archiveTask);
-                return archiveTask;
-            }
+            ArchiveTask baseOld = archiveRepository.findByIdAndUser(archiveTask.getId(), user);
+            baseOld.setName(archiveTask.getName());
+            baseOld.setTime(archiveTask.getTime());
+            baseOld.setActive(archiveTask.getActive());
+            baseOld.setRating(archiveTask.getRating());
+            baseOld.setCategory(archiveTask.getCategory());
+            baseOld.setRepeatable(archiveTask.getRepeatable());
+            baseOld.setUser(archiveTask.getUser());
+            archiveRepository.save(baseOld);
+            return baseOld;
         }
     }
+
     @Transactional
-    public void deleteTaskArchiveById(int id){
-        Optional<ArchiveTask> base = archiveRepository.findById(id);
-        if(base.isPresent()){
-            archiveRepository.deleteById(id);
-        }else{
-            System.out.println("Такого задания нет");
-        }
+    public void deleteTaskArchiveById(int id,User user) {
+        ArchiveTask base = archiveRepository.findByIdAndUser(id, user);
     }
 }

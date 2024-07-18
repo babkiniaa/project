@@ -25,7 +25,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Transactional(readOnly = true)
     public List<User> getAllUser() {
         List<User> result = (List<User>) userRepository.findAll();
         if (result.size() > 0) {
@@ -34,7 +34,7 @@ public class UserService {
             return new ArrayList<User>();
         }
     }
-
+    @Transactional(readOnly = true)
     public Optional<User>getUserByEmail(String name) {
         System.out.println(name);
         System.out.println(userRepository.findByEmail(name));

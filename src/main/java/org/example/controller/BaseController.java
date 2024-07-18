@@ -45,113 +45,131 @@ public class BaseController {
         model.addAttribute("base", new Base());
         return "main";
     }
+
     @PostMapping("/main")
     public String addProduct(@ModelAttribute("base") Base baseModel, Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        Optional<User> user = userService.getUserByEmail(userDetails.getUsername());
-//        baseModel.setUser(user.get());
-        baseService.createOrUpdateBase(baseModel);
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        baseModel.setUser(user);
+        baseService.createOrUpdateBase(baseModel, user);
         return "main";
     }
 
     @GetMapping("/main/{id}")
-    public String getById(@PathVariable int id, Model model) {
-        Base base = baseService.getBaseById(id);
+    public String getById(@PathVariable int id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        Base base = baseService.getBaseById(id, user);
         model.addAttribute("task", base);
         return "info";
     }
 
     @GetMapping("/main/all")
-    public String getAllBase(Model model) {
-        model.addAttribute("all", baseService.getAllBase());
+    public String getAllBase(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        model.addAttribute("all", baseService.getAllBase(user));
         return "all";
     }
 
     @PostMapping("/main/edit/{id}")
     public String editBase(@PathVariable("id") int id,
                            @ModelAttribute("base") Base baseModel,
+                           @AuthenticationPrincipal UserDetails userDetails,
                            Model model) {
-        baseService.createOrUpdateBase(baseModel);
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        baseService.createOrUpdateBase(baseModel, user);
+        System.out.println("LF");
         return "edit";
     }
 
     @GetMapping("/main/edit/{id}")
     public String editBase(@ModelAttribute("base") Base baseModel) {
-        return "/bases/edit";
+        return "/edit";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id,
-                         @ModelAttribute("base") Base baseModel) {
-        baseService.deleteBaseById(id);
+                         @ModelAttribute("base") Base baseModel,
+                         @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        baseService.deleteBaseById(id, user);
         return "all";
     }
 
     @GetMapping("/main/all/completed")
-    public String getAllBaseComplete(Model model) {
-        model.addAttribute("all", baseService.findByActive(true));
+    public String getAllBaseComplete(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        model.addAttribute("all", baseService.findByActive(true, user));
         return "all";
     }
 
     @GetMapping("/main/all/notcompleted")
-    public String getAllBaseNotComplete(Model model) {
-        model.addAttribute("all", baseService.findByActive(false));
+    public String getAllBaseNotComplete(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        model.addAttribute("all", baseService.findByActive(false, user));
         return "all";
     }
 
     @GetMapping("/main/all/forTime")
-    public String getAllBaseTime(Model model, @RequestParam(required = false) LocalDateTime date) {
-        model.addAttribute("all", baseService.findByTime(date));
+    public String getAllBaseTime(Model model, @RequestParam(required = false) LocalDateTime date, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        model.addAttribute("all", baseService.findByTime(date, user));
         return "all";
     }
 
     @GetMapping("/main/all/forCategory")
-    public String getAllForCategory(Model model, @RequestParam(required = false)Category category) {
-        model.addAttribute("all", baseService.findByCategory(category));
+    public String getAllForCategory(Model model, @RequestParam(required = false) Category category, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        model.addAttribute("all", baseService.findByCategory(category, user));
         return "all";
     }
 
     @GetMapping("/main/all/forName")
-    public String getAllBaseName(Model model, @RequestParam(required = false) String search) {
-        System.out.println(search);
-        model.addAttribute("all", baseService.findByName(search));
+    public String getAllBaseName(Model model, @RequestParam(required = false) String search, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        model.addAttribute("all", baseService.findByName(search, user));
         return "all";
     }
 
     @GetMapping("archive/{id}")
-    public String archived(@PathVariable int id, @ModelAttribute("base") Base baseModel) {
-        Base base = baseService.getBaseById(id);
-        ArchiveTask archiveTask = new ArchiveTask(base.getId(), base.getName(), base.getDescription(), base.getTime(), base.getActive(), base.getRating(), base.getCategory(), base.getRepeatable());
-        baseService.deleteBaseById(id);
-        archiveService.createOrUpdateArchive(archiveTask);
+    public String archived(@PathVariable int id, @ModelAttribute("base") Base baseModel, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        Base base = baseService.getBaseById(id, user);
+        ArchiveTask archiveTask = new ArchiveTask(base.getId(), base.getName(), base.getDescription(), base.getTime(), base.getActive(), base.getRating(), base.getCategory(), base.getRepeatable(), base.getUser());
+        baseService.deleteBaseById(id, user);
+        archiveService.createOrUpdateArchive(archiveTask, user);
         return "all";
     }
 
     @GetMapping("main/all/all")
-    public String allAll(Model model) {
-        List<Base> bases = baseService.getAllBase();
-        List<ArchiveTask> archiveTasks = archiveService.getAllArchive();
+    public String allAll(Model model,@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        List<Base> bases = baseService.getAllBase(user);
+        List<ArchiveTask> archiveTasks = archiveService.getAllArchive(user);
         model.addAttribute("all", bases);
         model.addAttribute("archive", archiveTasks);
         return "all";
     }
 
     @GetMapping("main/all/allSort")
-    public String AllSort(Model model) {
-        List<Base> bases = baseService.sortByRating();
+    public String AllSort(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        List<Base> bases = baseService.sortByRating(user);
         model.addAttribute("all", bases);
         return "all";
     }
+
     @GetMapping("/main/archive/{id}")
-    public String getByIdArchive(@PathVariable int id, Model model) {
-        ArchiveTask archiveTask = archiveService.getArchiveById(id);
+    public String getByIdArchive(@PathVariable int id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        ArchiveTask archiveTask = archiveService.getArchiveById(id,user);
         model.addAttribute("task", archiveTask);
         return "info";
     }
 
     @Scheduled(initialDelay = 2000, fixedRate = 3000)
     @Async
-    public void nextTime(){
-        List<Base> bases = baseService.findByTime(LocalDateTime.now());
+    public void nextTime(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
+        List<Base> bases = baseService.findByTime(LocalDateTime.now(), user);
         baseService.nextTime(bases);
     }
 }
