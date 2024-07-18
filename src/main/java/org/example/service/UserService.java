@@ -36,8 +36,8 @@ public class UserService {
     }
     @Transactional(readOnly = true)
     public Optional<User>getUserByEmail(String name) {
-        System.out.println(name);
-        System.out.println(userRepository.findByEmail(name));
+//        System.out.println(name);
+//        System.out.println(userRepository.findByEmail(name));
         return userRepository.findByEmail(name);
     }
     @Transactional
@@ -45,7 +45,6 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
         userRepository.save(user);
-//        System.out.println(userRepository.findByEmail(user.getEmail()));
     }
 
     @Transactional

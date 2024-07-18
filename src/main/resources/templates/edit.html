@@ -36,97 +36,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
-    <style>
-        body {
-            background: url('https://example.com/your-pony-image.jpg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #d147a3;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #ff69b4;
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-
-        form {
-            background: #ffffff;
-            border: 2px solid #ff69b4;
-            border-radius: 10px;
-            padding: 20px;
-            display: inline-block;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        input[type="datetime-local"],
-        button {
-            display: block;
-            margin: 10px auto;
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ff69b4;
-            font-size: 1em;
-        }
-
-        input[type="radio"],
-        input[type="checkbox"] {
-            margin: 0 10px;
-        }
-
-        label {
-            color: #d147a3;
-        }
-
-        fieldset {
-            border: 2px solid #ff69b4;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 10px auto;
-            width: 50%;
-        }
-
-        legend {
-            color: #ff69b4;
-        }
-
-        button {
-            background-color: #ff69b4;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #d147a3;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .button-group button {
-            margin: 5px 0;
-        }
-
-    </style>
 </head>
 <body>
 <h1>Меняй меня, если сможешь</h1>
 
 <form th:action="@{/main/edit/{id}(id=${base.getId()})}" th:object="${base}" method="post">
-    Название цели: <input type="text" th:field="*{name}"><br/>
+    Название цели: <input type="text" th:field="*{name}"><br/><div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
     Описание: <input type="text" step="any" th:field="*{description}"><br/>
     Важность:
     <div>
@@ -137,7 +52,7 @@
         <input type="radio" value="5" th:field="*{rating}"/> 5
     </div>
     <label for="localdate">Дата и время: </label>
-    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/>
+    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/><div class="form-error" th:if="${#fields.hasErrors('time')}" th:text="${#fields.errors('time').get(#fields.errors('time').size() - 1)}"></div>
     Категория:
     <p><select th:field="*{category}">
         <option value="LIFE">LIFE</option>
@@ -166,7 +81,7 @@
     </div>
 </form>
 
-<form th:action="@{/delete/{id}(id=${base.getId()})}" th:object="${base}" target="_blank">
+<form th:action="@{/delete/{id}(id=${base.getId()})}" method="post" target="_blank">
     <div class="button-group">
         <button type="submit">Удали</button>
     </div>

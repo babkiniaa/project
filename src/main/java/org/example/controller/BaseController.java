@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.Enums.Category;
 import org.example.entity.ArchiveTask;
 import org.example.entity.Base;
@@ -14,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -47,7 +49,10 @@ public class BaseController {
     }
 
     @PostMapping("/main")
-    public String addProduct(@ModelAttribute("base") Base baseModel, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String addProduct(@Valid @ModelAttribute("base") Base baseModel, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            return "main";
+        }
         User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
         baseModel.setUser(user);
         baseService.createOrUpdateBase(baseModel, user);
@@ -71,12 +76,15 @@ public class BaseController {
 
     @PostMapping("/main/edit/{id}")
     public String editBase(@PathVariable("id") int id,
-                           @ModelAttribute("base") Base baseModel,
+                           @Valid @ModelAttribute("base") Base baseModel, BindingResult bindingResult,
                            @AuthenticationPrincipal UserDetails userDetails,
                            Model model) {
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
+        System.out.println(12121212);
         User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
         baseService.createOrUpdateBase(baseModel, user);
-        System.out.println("LF");
         return "edit";
     }
 
@@ -85,9 +93,8 @@ public class BaseController {
         return "/edit";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable int id,
-                         @ModelAttribute("base") Base baseModel,
                          @AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
         baseService.deleteBaseById(id, user);
@@ -109,7 +116,10 @@ public class BaseController {
     }
 
     @GetMapping("/main/all/forTime")
-    public String getAllBaseTime(Model model, @RequestParam(required = false) LocalDateTime date, @AuthenticationPrincipal UserDetails userDetails) {
+    public String getAllBaseTime(Model model, @Valid @RequestParam(required = false) LocalDateTime date, BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            return "main";
+        }
         User user = userService.getUserByEmail(userDetails.getUsername()).orElseThrow();
         model.addAttribute("all", baseService.findByTime(date, user));
         return "all";

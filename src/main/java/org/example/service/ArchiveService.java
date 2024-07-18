@@ -37,21 +37,8 @@ public class ArchiveService {
 
     @Transactional
     public ArchiveTask createOrUpdateArchive(ArchiveTask archiveTask, User user) {
-        if (archiveTask.getId() == 0) {
             archiveTask = archiveRepository.save(archiveTask);
             return archiveTask;
-        } else {
-            ArchiveTask baseOld = archiveRepository.findByIdAndUser(archiveTask.getId(), user);
-            baseOld.setName(archiveTask.getName());
-            baseOld.setTime(archiveTask.getTime());
-            baseOld.setActive(archiveTask.getActive());
-            baseOld.setRating(archiveTask.getRating());
-            baseOld.setCategory(archiveTask.getCategory());
-            baseOld.setRepeatable(archiveTask.getRepeatable());
-            baseOld.setUser(archiveTask.getUser());
-            archiveRepository.save(baseOld);
-            return baseOld;
-        }
     }
 
     @Transactional

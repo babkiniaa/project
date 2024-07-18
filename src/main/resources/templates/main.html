@@ -10,7 +10,7 @@
 <p>Ниже строчка по вашему пожеланию</p>
 
 <form th:object="${base}" action="/main" method="post">
-    Название цели: <input type="text" th:field="*{name}"><br/>
+    Название цели: <input type="text" th:field="*{name}"><br/><div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
     Описание: <input type="text" step="any" th:field="*{description}"><br/>
     Важность:
     <div><input type="radio" value="1" th:field="*{rating}"/>
@@ -19,7 +19,7 @@
         <input type="radio" value="4" th:field="*{rating}"/>
         <input type="radio" value="5" th:field="*{rating}"/></div>
     <label for="localdate">Дата и время: </label>
-    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/>
+    <input type="datetime-local" id="localdate" th:field="*{time}"/><br/><div class="form-error" th:if="${#fields.hasErrors('time')}" th:text="${#fields.errors('time').get(#fields.errors('time').size() - 1)}"></div>
 
     Категория:
     <p><select th:field="*{category}">

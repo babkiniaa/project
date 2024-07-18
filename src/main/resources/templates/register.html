@@ -4,19 +4,24 @@
   <title>Register</title>
 </head>
 <body>
-<h1>Register</h1>
+<h1>Регистрация</h1>
 <form th:action="@{/register}" th:object="${user}" method="post">
   <div>
     <label>Username:</label>
-    <input type="text" th:field="*{email}" />
+    <input type="text" th:field="*{email}" /><div class="form-error" th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email').get(#fields.errors('email').size() - 1)}"></div>
   </div>
   <div>
     <label>Password:</label>
-    <input type="password" th:field="*{password}" />
+    <input type="password" th:field="*{password}" /><div class="form-error" th:if="${#fields.hasErrors('password')}" th:text="${#fields.errors('password').get(#fields.errors('password').size() - 1)}"></div>
   </div>
   <div>
-    <button type="submit">Register</button>
+    <button type="submit">Регистрируюсь</button>
   </div>
 </form>
+<div>
+  <form action="/register" target="_blank">
+    <button>Вход</button>
+  </form>
+</div>
 </body>
 </html>
